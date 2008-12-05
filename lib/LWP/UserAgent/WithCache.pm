@@ -8,7 +8,7 @@ use Cache::FileCache;
 use File::HomeDir;
 use File::Spec;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 our %default_cache_args = (
     'namespace' => 'lwp-cache',
@@ -106,7 +106,7 @@ L<LWP::UserAgent>, L<Cache::Cache>, L<Cache::FileCache>
 
 =head1 AUTHOR
 
-Masayoshi Sekimura E<lt>sekimura@qootas.orgE<gt>
+Masayoshi Sekimura E<lt>sekimura at gmail dot comE<gt>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
