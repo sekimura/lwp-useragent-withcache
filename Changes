@@ -1,0 +1,23 @@
+Revision history for Perl extension LWP::UserAgent::WithCache.
+
+0.06  Mon Oct 8 23:35:13 2007
+	- added a tiny test for request()
+
+0.05  Mon Oct 8 20:56:01 2007
+	- fixed #16374: UserAgent should not cache HEAD requests
+
+0.04  Mon Oct 8 20:50:01 2007
+	- fixed #16377: Responses without "Expires" header are not retrieved from cache
+
+0.03  Wed Feb 23 10:39:06 2004
+	- handle Etag, If-None-Match and Expires headers
+	- modify cache data structre
+	- only cache with HTTP_OK response
+
+0.02  Thu Sep 30 08:29:06 2004
+	- Fixed cache object updating
+
+0.01  Wed Sep 29 17:24:06 2004
+	- original version; created by h2xs 1.23 with options
+		-AX -n LWP::UserAgent::WithCache
+
