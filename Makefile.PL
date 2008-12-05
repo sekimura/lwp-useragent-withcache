@@ -5,5 +5,7 @@ WriteMakefile(
     PREREQ_PM         => {
         LWP::UserAgent => 0,
         Cache::FileCache => 0,
+        File::HomeDIr => 0,
+        File::Spec => 0,
     }, 
 );
