@@ -8,7 +8,7 @@ use Cache::FileCache;
 use File::HomeDir;
 use File::Spec;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 our %default_cache_args = (
     'namespace' => 'lwp-cache',
@@ -17,8 +17,18 @@ our %default_cache_args = (
 
 sub new {
     my $class = shift;
-    my $cache_opt = shift || {};
-    my $self = $class->SUPER::new(@_);
+    my $cache_opt;
+    my %lwp_opt;
+    unless (scalar @_ % 2) {
+        %lwp_opt = @_;
+        for my $key (qw(namespace cache_root default_expires_in)) {
+            $cache_opt->{$key} = delete $lwp_opt{$key};
+        }
+    } else {
+        $cache_opt = shift || {};
+        %lwp_opt = @_;
+    }
+    my $self = $class->SUPER::new(%lwp_opt);
     my %cache_args = (%default_cache_args, %$cache_opt);
     $self->{cache} = Cache::FileCache->new(\%cache_args);
     return $self
@@ -85,7 +95,7 @@ LWP::UserAgent::WithCache - LWP::UserAgent extension with local cache
   use LWP::UserAgent::WithCache;
   my %cache_opt = (
     'namespace' => 'lwp-cache',
-    'cache_root' => "$HOME/.cache",
+    'cache_root' => File::Spec->catfile(File::HomeDir->my_home, '.cache'),
     'default_expires_in' => 600 );
   my $ua = LWP::UserAgent::WithCache->new(\%cache_opt);
   my $response = $ua->get('http://search.cpan.org/');
