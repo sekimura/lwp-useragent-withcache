@@ -8,7 +8,7 @@ use Cache::FileCache;
 use File::HomeDir;
 use File::Spec;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 our %default_cache_args = (
     'namespace' => 'lwp-cache',

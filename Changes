@@ -1,5 +1,8 @@
 Revision history for Perl extension LWP::UserAgent::WithCache.
 
+0.11  Tue Mar 24 13:44:00 PDT 2009
+	- pulled from tokuhirom/lwp-useragent-withcache to fix a bug filling undef hash values into Cache::FileCache constructor option (Thanks tokuhirom!)
+
 0.10  Fri Dec  5 17:52:33 PST 2008
 	- RT:41474 fixed typo in PREREQ_PM
 	- RT:41475 SYNOPSIS: File::HomeDir->my_home insted of $HOME
