@@ -21,8 +21,9 @@ sub new {
     my %lwp_opt;
     unless (scalar @_ % 2) {
         %lwp_opt = @_;
+        $cache_opt = {};
         for my $key (qw(namespace cache_root default_expires_in)) {
-            $cache_opt->{$key} = delete $lwp_opt{$key};
+            $cache_opt->{$key} = delete $lwp_opt{$key} if exists $lwp_opt{$key};
         }
     } else {
         $cache_opt = shift || {};
