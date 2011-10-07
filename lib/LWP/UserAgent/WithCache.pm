@@ -50,11 +50,10 @@ sub request {
 
          if (defined $obj->{expires} and $obj->{expires} > time()) {
              return HTTP::Response->parse($obj->{as_string});
-         } 
+         }
 
          if (defined $obj->{last_modified}) {
-             $request->header('If-Modified-Since' =>
-                              HTTP::Date::time2str($obj->{last_modified}));
+             $request->header('If-Modified-Since' => HTTP::Date::time2str($obj->{last_modified}));
          }
 
          if (defined $obj->{etag}) {
@@ -65,9 +64,17 @@ sub request {
      }
 
      my $res = $self->SUPER::request(@args);
-     $self->set_cache($uri, $res) if $res->code eq HTTP::Status::RC_OK;
-
-     return $res;
+     
+     if ($res->code eq HTTP::Status::RC_NOT_MODIFIED) {
+       $res = HTTP::Response->parse($obj->{as_string});
+       $self->set_cache($uri, $res);
+     }
+     
+     if ($res->code eq HTTP::Status::RC_OK) {
+       $self->set_cache($uri, $res);
+     }
+     
+     return $res;     
 }
 
 sub set_cache {
