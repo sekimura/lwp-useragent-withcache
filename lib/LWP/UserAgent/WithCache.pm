@@ -65,7 +65,16 @@ sub request {
      }
 
      my $res = $self->SUPER::request(@args);
-     $self->set_cache($uri, $res) if $res->code eq HTTP::Status::RC_OK;
+
+     ## return cached data if it is "Not Modified"
+     if ($res->code eq HTTP::Status::RC_NOT_MODIFIED) {
+        return HTTP::Response->parse($obj->{as_string});
+     }
+
+     ## cache only "200 OK" content
+     if ($res->code eq HTTP::Status::RC_OK) {
+        $self->set_cache($uri, $res);
+     }
 
      return $res;
 }
