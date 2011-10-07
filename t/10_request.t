@@ -1,4 +1,4 @@
-use Test::More qw(no_plan);
+use Test::More tests => 2;
 
 use File::Temp qw/ tempfile tempdir /;
 use LWP::UserAgent::WithCache;
@@ -8,6 +8,7 @@ my $tempdir = tempdir( CLEANUP => 1 );
 my $ua = LWP::UserAgent::WithCache->new({ cache_root => $tempdir });
 
 my $res;
+{
 $res  = HTTP::Response->parse(<<'EOF');
 HTTP/1.1 200 OK
 Connection: close
@@ -34,3 +35,31 @@ $ua->set_cache($uri, $res);
 $res = $ua->get('http://www.example.com/styles.css');
 
 is ($res->code, 200);
+}
+
+# haven't expired yet
+{
+$res  = HTTP::Response->parse(<<'EOF');
+HTTP/1.1 200 OK
+Connection: close
+Date: Tue, 09 Oct 2007 06:03:01 GMT
+Accept-Ranges: bytes
+Server: Apache
+Content-Length: 237
+Content-Type: text/css
+Last-Modified: Wed, 03 Oct 2007 00:00:13 GMT
+Expires: Thr, 16 Jan 2038 03:14:06 GMT
+
+/* This is the StyleCatcher theme addition. Do not remove this block. */
+/* Selected Layout:  */
+@import url(base_theme.css);
+@import url(http://mt.qootas.org/mt/mt-static/themes/minimalist-red/screen.css);
+/* end StyleCatcher imports */
+EOF
+
+my $uri = 'http://www.example.com/styles.css';
+$ua->set_cache($uri, $res);
+$res = $ua->get('http://www.example.com/styles.css');
+
+is ($res->code, 200);
+}
