@@ -48,7 +48,7 @@ sub request {
 
      if ( defined $obj ) {
 
-         unless (defined $obj->{expires} and $obj->{expires} <= time()) {
+         if (defined $obj->{expires} and $obj->{expires} > time()) {
              return HTTP::Response->parse($obj->{as_string});
          } 
 
