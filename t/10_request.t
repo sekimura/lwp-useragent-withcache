@@ -100,6 +100,6 @@ local *LWP::UserAgent::request = sub {return $not_modified_res};
 
 my $cached_res = $ua->get('http://www.example.com/styles.css');
 
-is ($cached_res->code, 304);
+is ($cached_res->code, 200);
 is ($cached_res->content, $res->content);
 }

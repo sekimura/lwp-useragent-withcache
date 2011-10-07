@@ -68,11 +68,7 @@ sub request {
 
      ## return cached data if it is "Not Modified"
      if ($res->code eq HTTP::Status::RC_NOT_MODIFIED) {
-        my $not_modified_res = HTTP::Response->parse($obj->{as_string});
-        # hrm.. should we use '200 OK' here?
-        $not_modified_res->code(HTTP::Status::RC_NOT_MODIFIED);
-        $not_modified_res->message(HTTP::Status::status_message(HTTP::Status::RC_NOT_MODIFIED));
-        return $not_modified_res;
+        return HTTP::Response->parse($obj->{as_string});
      }
 
      ## cache only "200 OK" content
