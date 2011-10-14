@@ -1,5 +1,10 @@
 Revision history for Perl extension LWP::UserAgent::WithCache.
 
+0.12  Fri Oct 14 13:41:29 PDT 2011
+	- Fixed "Expires" header handling logic
+	- implemented 304 Not Modified response handler to return cached response object
+	- Thanks to Chris Cherry https://github.com/ctcherry for reporting bugs and reviewing changes
+
 0.11  Tue Mar 24 13:44:00 PDT 2009
 	- pulled from tokuhirom/lwp-useragent-withcache to fix a bug filling undef hash values into Cache::FileCache constructor option (Thanks tokuhirom!)
 
